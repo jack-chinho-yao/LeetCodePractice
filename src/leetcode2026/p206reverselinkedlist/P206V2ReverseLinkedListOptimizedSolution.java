@@ -4,8 +4,13 @@ import leetcode2026.common.ListNode;
 
 public class P206V2ReverseLinkedListOptimizedSolution {
 
+    // Recursive - Time: O(n), Space: O(n) call stack
     public ListNode reverseList(ListNode head) {
-        return null;
+        if (head == null || head.next == null) return head;
+        ListNode newHead = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
     }
 
     public static void main(String[] args) {
