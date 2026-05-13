@@ -38,6 +38,7 @@ public class P155MinStackOptimizedSolutionClaude {
 
     public static void main(String[] args) {
         MinStack minStack = new P155MinStackOptimizedSolutionClaude().new MinStack();
+        ArrayDeque<Object> deque = new ArrayDeque<>();
         minStack.push(-2);
         minStack.push(0);
         minStack.push(-3);

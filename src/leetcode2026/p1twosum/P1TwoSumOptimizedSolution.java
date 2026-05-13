@@ -7,7 +7,7 @@ public class P1TwoSumOptimizedSolution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> numToIndex = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
+            int complement = target - nums[i]; // complement 補數
             if (numToIndex.containsKey(complement)) {
                 return new int[]{i, numToIndex.get(complement)};
             }
