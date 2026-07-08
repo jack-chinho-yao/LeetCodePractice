@@ -7,17 +7,12 @@ public class P49V3GroupAnagramsOptimizedSolutionPractice {
     // char[26] counting + new String(count) as key, Time O(n * k), Space O(n * k)
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
-        for(int i = 0; i < strs.length; i++){
-            String s = strs[i];
-            char[] cArray = new char[26];
-
-            for(int j = 0; j < s.length(); j++){
-
-                cArray[s.charAt(j)-'a']++;
+        for(String s : strs){
+            char[] chars = new char[26];
+            for(int i = 0; i < s.length(); i++){
+                chars[s.charAt(i) - 'a']++;
             }
-            String key = new String(cArray);
-//            map.putIfAbsent(key, new ArrayList());
-//            map.get(key).add(s);
+            String key = new String(chars);
             map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
         }
         return new ArrayList<>(map.values());
