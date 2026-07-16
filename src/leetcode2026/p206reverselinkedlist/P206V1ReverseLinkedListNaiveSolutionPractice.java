@@ -25,7 +25,8 @@ public class P206V1ReverseLinkedListNaiveSolutionPractice {
   head.next = temp1  →  1.next = null   // 此刻 2 已經無人指向,遺失!
   head = head.next   →  head = null     // 想往前走卻走不到 2 了
 
-  所以順序不能反。先 temp2 = head.next 把「回家的路」記起來,才能安心地把 head.next 改掉。
+  所以順序不能反。先 temp2 = head.next 把「回家的
+  路」記起來,才能安心地把 head.next 改掉。
 
   小提醒(命名):你的邏輯完全對,只是變數名 temp1 / temp2 語意較弱。對照你檔案底部註解用的 prev / temp,可以改成:
 

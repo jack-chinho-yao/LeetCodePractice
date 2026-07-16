@@ -103,4 +103,54 @@ JOIN (
  *                                (MySQL 8+、PostgreSQL、Oracle、SQL Server 2008+)
  *   思路 3 (JOIN 子查詢，本檔)— 相容性最好，連最古老的 DB 都吃。底層運作最透明，
  *                                懂這種寫法等於懂底層發生什麼，再學前兩種更有感。
+
+
+ SELECT Department, Employee, Salary FROM (
+    SELECT d.name AS Department, e.name AS Employee, e.salary, dense_rank() over (PARTITION BY d.name ORDER BY e.salary DESC) AS rn
+    FROM Employee e
+    JOIN Department d ON d.id = e.departmentId
+)t WHERE rn = 1;
+
+
+
+ 你的寫法完全正確，而且就是思路 2 的變體——LeetCode 上這題這樣寫是滿分解答。幾個點說明一下：
+
+  1. DENSE_RANK vs RANK — 在這題結果一樣
+
+  因為你只取 rn = 1（最頂端那層），兩者在「第一名」完全等價。差別只在遇到 tie 之後：
+
+  salary  RANK  DENSE_RANK
+  90000    1        1
+  90000    1        1
+  80000    3        2      ← 這裡才開始不同（RANK 跳號，DENSE_RANK 不跳）
+
+  既然只篩 rn = 1，用哪個都對。所以你這版和註解裡的思路 2 產出的結果一模一樣。
+
+  因為你只取 rn = 1（最頂端那層），兩者在「第一名」完全等價。差別只在遇到 tie 之後：
+
+  salary  RANK  DENSE_RANK
+  90000    1        1
+  90000    1        1
+  80000    3        2      ← 這裡才開始不同（RANK 跳號，DENSE_RANK 不跳）
+
+  既然只篩 rn = 1，用哪個都對。所以你這版和註解裡的思路 2 產出的結果一模一樣。
+
+  2. 一個小差異：PARTITION BY d.name vs e.departmentId
+
+  - 註解裡思路 2 用的是 e.departmentId（id）
+  - 你用的是 d.name（部門名稱）
+
+  99% 情況下結果相同。唯一風險：如果兩個部門 id 不同但名稱剛好一樣，用 name 分組會把它們併在一起算，用 departmentId 才是最嚴謹的。實務上建議
+  partition by id。
+
+  3. 表名
+
+  你寫的是 Employee / Department（LeetCode 原始表名），這在本檔要跑本地測試的話要改成 184_employee /
+  184_department。不過如果只是貼在註解區當「LeetCode 提交版」，維持原表名是合理的。
+
+  ---
+  要不要我把它加進檔案？ 你的 DENSE_RANK 版其實可以當作思路 2 的補充（示範 RANK 和 DENSE_RANK 在這題等價），或獨立成思路
+  4。不過原檔已經有三個解法且註解完整，加不加都行——你決定，我可以幫你補上並統一表名。
+
+
  */

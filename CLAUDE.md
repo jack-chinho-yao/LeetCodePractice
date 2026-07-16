@@ -23,6 +23,19 @@ src/
 - Additional versions (V3, V4...) are added as the solution evolves
 - Class names use PascalCase
 
+## SQL Problems
+
+- SQL problems live in a single flat folder: `src/leetcode2026/sql/`
+  (NOT in a per-problem package like the Java solutions)
+- **File name**: `P{number}{ProblemName}.sql` (e.g. `P177NthHighestSalary.sql`)
+  — no `V{version}`, no `Naive/Optimized` suffix (those are Java-only)
+- **Table names**: prefix with the problem number, lowercase: `{number}_{tablename}`
+  (e.g. `177_employee`, `178_scores`, `180_logs`)
+- Each file includes: `DROP TABLE IF EXISTS` + `CREATE TABLE` + `INSERT` sample
+  data (LeetCode example) + the solution(s)
+- Follow the same comments convention: brief one-liner up top, detailed
+  思路/notes at the bottom in a `/* ... */` block
+
 ## Shared Data Structures (`leetcode2026.common`)
 
 - `ListNode` — singly linked list node
