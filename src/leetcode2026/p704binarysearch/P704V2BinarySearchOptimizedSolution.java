@@ -5,6 +5,21 @@ public class P704V2BinarySearchOptimizedSolution {
 
     public int search(int[] nums, int target) {
         // TODO
+        int right =  nums.length;
+        int mid = nums.length / 2;
+        int left = 0;
+        while(right != left){
+            if (nums[mid] == target){
+                return mid;
+            }else if (nums[mid] > target){
+                right = mid;
+            }else if (nums[mid] < target){
+                left = mid+1;
+            }else{
+                System.out.println("unpredicted error");
+            }
+            mid = (left + right) / 2;
+        }
         return -1;
     }
 
